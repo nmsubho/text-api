@@ -1,0 +1,23 @@
+{
+  "name": "text-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "author": "Subho",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "http-status": "^1.7.4",
+    "mongodb": "^4.12.0",
+    "mongoose": "^8.3.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

@@ -84,3 +84,98 @@ exports.deleteText = catchAsync(async (req, res) => {
     data: null,
   });
 });
+
+exports.getNumberOfWords = catchAsync(async (req, res) => {
+  const result = await TextService.getTextById(req.params.id);
+
+  if (!result) {
+    throw new ApiError(
+      httpStatus.SERVICE_UNAVAILABLE,
+      'Text not found or deleted'
+    );
+  }
+
+  sendResponse(res, {
+    status: httpStatus.OK,
+    statusType: 'success',
+    success: true,
+    message: 'Number Of Words fetched successfully',
+    data: { numberOfWords: result.wordCount },
+  });
+});
+
+exports.getNumberOfCharacters = catchAsync(async (req, res) => {
+  const result = await TextService.getTextById(req.params.id);
+
+  if (!result) {
+    throw new ApiError(
+      httpStatus.SERVICE_UNAVAILABLE,
+      'Text not found or deleted'
+    );
+  }
+
+  sendResponse(res, {
+    status: httpStatus.OK,
+    statusType: 'success',
+    success: true,
+    message: 'Number Of Characters fetched successfully',
+    data: { numberOfCharacters: result.charCount },
+  });
+});
+
+exports.getNumberOfSentences = catchAsync(async (req, res) => {
+  const result = await TextService.getTextById(req.params.id);
+
+  if (!result) {
+    throw new ApiError(
+      httpStatus.SERVICE_UNAVAILABLE,
+      'Text not found or deleted'
+    );
+  }
+
+  sendResponse(res, {
+    status: httpStatus.OK,
+    statusType: 'success',
+    success: true,
+    message: 'Number Of Sentences fetched successfully',
+    data: { numberOfSentences: result.sentenceCount },
+  });
+});
+
+exports.getNumberOfParagraphs = catchAsync(async (req, res) => {
+  const result = await TextService.getTextById(req.params.id);
+
+  if (!result) {
+    throw new ApiError(
+      httpStatus.SERVICE_UNAVAILABLE,
+      'Text not found or deleted'
+    );
+  }
+
+  sendResponse(res, {
+    status: httpStatus.OK,
+    statusType: 'success',
+    success: true,
+    message: 'Number Of Paragraphs fetched successfully',
+    data: { numberOfParagraphs: result.paragraphCount },
+  });
+});
+
+exports.getLongestWords = catchAsync(async (req, res) => {
+  const result = await TextService.getTextById(req.params.id);
+
+  if (!result) {
+    throw new ApiError(
+      httpStatus.SERVICE_UNAVAILABLE,
+      'Text not found or deleted'
+    );
+  }
+
+  sendResponse(res, {
+    status: httpStatus.OK,
+    statusType: 'success',
+    success: true,
+    message: 'Longest Words fetched successfully',
+    data: { longestWords: result.longestWords },
+  });
+});

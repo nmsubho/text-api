@@ -4,32 +4,40 @@ const app = express();
 
 const cors = require("cors");
 const httpStatus = require("http-status");
-const config = require("./src/config");
-const globalErrorHandler = require("./src/middlewares/globalErrorHandler");
-const routes = require("./src/routes");
-const ApiError = require("./src/errors/ApiError");
+const rateLimit = require('express-rate-limit');
+
+const config = require('./src/config');
+const globalErrorHandler = require('./src/middlewares/globalErrorHandler');
+const routes = require('./src/routes');
+const ApiError = require('./src/errors/ApiError');
 
 let whitelist = [];
 
-if (config.env !== "production") {
-  whitelist.push("http://localhost:3000");
+if (config.env !== 'production') {
+  whitelist.push('http://localhost:3000');
 }
 
 const corsOptions = function (req, callback) {
   let corsOptions;
   // Check if the origin contains the allowed domains.
-  if (!req.header("Origin") || whitelist.indexOf(req.header("Origin")) !== -1) {
+  if (!req.header('Origin') || whitelist.indexOf(req.header('Origin')) !== -1) {
     corsOptions = {
-      origin: req.header("Origin"),
+      origin: req.header('Origin'),
       credentials: true,
-      exposedHeaders: ["x-file-name"],
+      exposedHeaders: ['x-file-name'],
     }; // reflect (enable) the requested origin in the CORS response
     callback(null, corsOptions);
   } else {
-    callback(new ApiError(httpStatus.FORBIDDEN, "Forbidden Request"));
+    callback(new ApiError(httpStatus.FORBIDDEN, 'Forbidden Request'));
   }
-  // callback expects two parameters: error and options
 };
+
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, // 10 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+});
+
+app.use(limiter);
 
 app.use(cors(corsOptions));
 app.use(morgan("dev"));
